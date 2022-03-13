@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://potion_components/specs/SpecResource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+manadatory = false
+specName = "Crit Multiplier"
+chance = 0.25
+minValue = 0.1
+maxValue = 4.0
