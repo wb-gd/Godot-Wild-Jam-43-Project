@@ -32,7 +32,6 @@ script = ExtResource( 3 )
 position = Vector2( 95, 0 )
 
 [node name="OffestDebugSprite" type="Sprite" parent="Pivot/CameraOffset"]
-visible = false
 scale = Vector2( 0.1875, 0.1875 )
 texture = ExtResource( 4 )
 
