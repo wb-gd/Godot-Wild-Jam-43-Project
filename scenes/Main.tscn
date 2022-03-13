@@ -8,17 +8,8 @@ extents = Vector2( 621, 10 )
 
 [node name="Main" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 23, -269 )
-rotating = true
-current = true
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 42, -384 )
-speed = 400.0
-jumpStrength = 1000.0
-extraJumpStrength = 1000.0
-gravity = 3000.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
