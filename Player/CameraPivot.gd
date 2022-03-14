@@ -5,7 +5,7 @@ onready var _parent: KinematicBody2D = $'..'
 onready var _offsetNode = $CameraOffset
 onready var _offsetStart: Vector2 = _offsetNode.position
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	update_pivot_angle()
 
 func update_pivot_angle():
