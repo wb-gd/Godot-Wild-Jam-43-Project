@@ -2,10 +2,13 @@
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/new_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/Main.gdns" type="Script" id=3]
+
+[sub_resource type="NativeScript" id=1]
+resource_name = "TestNative"
+class_name = "TestNative"
 
 [node name="Main" type="Node2D"]
-script = ExtResource( 3 )
+script = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -737, -999 )
