@@ -12,6 +12,7 @@ var _jumpsMade := 0
 var _velocity := Vector2.ZERO
 
 onready var _pivot: Node2D = $PlayerSkin
+onready var _animPlayer: AnimationPlayer = $PlayerSkin/polygons2/AnimationPlayer
 onready var _startScale: Vector2 = _pivot.scale
 onready var _direction := 1.0
 
@@ -24,10 +25,11 @@ func _physics_process(delta) -> void:
 	_velocity.x = _xDir * speed
 	_velocity.y += gravity * delta
 	
+	var isAirborn := _velocity.y < 0.0 and not is_on_floor()
 	var isFalling := _velocity.y > 0.0 and not is_on_floor()
 	var isJumping := Input.is_action_just_pressed("jump") and is_on_floor()
-	var isDoubleJumping := Input.is_action_just_pressed("jump") and isFalling
-	var isJumpCancelled := Input.is_action_just_released("jump") and _velocity.y < 0.0
+	var isDoubleJumping := Input.is_action_just_pressed("jump") and (isFalling or isAirborn)
+	var isJumpCancelled := Input.is_action_just_released("jump") and isAirborn
 	var isIdling := is_on_floor() and is_zero_approx(_velocity.x)
 	var isRunning := is_on_floor() and not is_zero_approx(_velocity.x)
 	
@@ -46,5 +48,17 @@ func _physics_process(delta) -> void:
 	_velocity = move_and_slide(_velocity, UP_DIRECTION)
 	
 	if not is_zero_approx(_velocity.x):
-		_pivot.scale.x = sign(_velocity.x) * _startScale.x
+		_pivot.scale.x = sign(_velocity.x) * _startScale.x * -1.0
 		_direction = sign(_velocity.x) * 1.0
+		
+	if isJumping or isDoubleJumping:
+		_animPlayer.stop()
+	elif isRunning:
+		_animPlayer.play("walk")
+	elif isAirborn:
+		_animPlayer.stop()
+	elif isFalling:
+		_animPlayer.play("fall")
+	elif isIdling:
+		_animPlayer.play("idle")
+		
