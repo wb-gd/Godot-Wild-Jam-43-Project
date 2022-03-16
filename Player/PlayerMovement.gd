@@ -12,7 +12,7 @@ var _jumpsMade := 0
 var _velocity := Vector2.ZERO
 
 onready var _pivot: Node2D = $PlayerSkin
-onready var _animPlayer: AnimationPlayer = $PlayerSkin/polygons/AnimationPlayer
+onready var _animPlayer: AnimationPlayer = $PlayerSkin/polygons2/AnimationPlayer
 onready var _startScale: Vector2 = _pivot.scale
 onready var _direction := 1.0
 
@@ -37,8 +37,8 @@ func _physics_process(delta) -> void:
 		_jumpsMade += 1
 		_velocity.y = -jumpStrength
 	elif isDoubleJumping:
+		_jumpsMade += 1
 		if _jumpsMade <= jumps:
-			_jumpsMade += 1
 			_velocity.y = -extraJumpStrength
 	elif isJumpCancelled:
 		_velocity.y = 0.0
@@ -58,7 +58,7 @@ func _physics_process(delta) -> void:
 	elif isAirborn:
 		_animPlayer.stop()
 	elif isFalling:
-		_animPlayer.stop()
+		_animPlayer.play("fall")
 	elif isIdling:
 		_animPlayer.play("idle")
 		
