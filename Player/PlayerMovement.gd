@@ -52,11 +52,11 @@ func _physics_process(delta) -> void:
 		_direction = sign(_velocity.x) * 1.0
 		
 	if isJumping or isDoubleJumping:
-		_animPlayer.stop()
+		_animPlayer.play("jump")
 	elif isRunning:
 		_animPlayer.play("walk")
 	elif isAirborn:
-		_animPlayer.stop()
+		_animPlayer.play("jump")
 	elif isFalling:
 		_animPlayer.play("fall")
 	elif isIdling:
