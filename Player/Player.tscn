@@ -18,7 +18,7 @@ gravity = 2500.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 0.25
+wait_time = 0.2
 one_shot = true
 
 [node name="PlayerSkin" parent="." instance=ExtResource( 1 )]
