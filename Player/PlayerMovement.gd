@@ -10,11 +10,13 @@ export var gravity := 4500.0
 
 var _jumpsMade := 0
 var _velocity := Vector2.ZERO
+var _direction := 1.0
+var _attackAnimOver := true
 
 onready var _pivot: Node2D = $PlayerSkin
 onready var _animPlayer: AnimationPlayer = $PlayerSkin/polygons2/AnimationPlayer
 onready var _startScale: Vector2 = _pivot.scale
-onready var _direction := 1.0
+onready var _attackTimer: Timer = $AttackTimer
 
 func _physics_process(delta) -> void:
 	var _xDir := (
@@ -32,7 +34,9 @@ func _physics_process(delta) -> void:
 	var isJumpCancelled := Input.is_action_just_released("jump") and isAirborn
 	var isIdling := is_on_floor() and is_zero_approx(_velocity.x)
 	var isRunning := is_on_floor() and not is_zero_approx(_velocity.x)
-	
+	var isTakingDamage := false
+	var isAttacking := Input.is_action_just_pressed("attack") and _attackAnimOver
+
 	if isJumping:
 		_jumpsMade += 1
 		_velocity.y = -jumpStrength
@@ -50,15 +54,25 @@ func _physics_process(delta) -> void:
 	if not is_zero_approx(_velocity.x):
 		_pivot.scale.x = sign(_velocity.x) * _startScale.x * -1.0
 		_direction = sign(_velocity.x) * 1.0
+	
+	if not isTakingDamage:
+		if _attackAnimOver:
+			if isAttacking:
+				_attackAnimOver = false
+				_attackTimer.start()
+				_animPlayer.play("throw")
+			elif isJumping or isDoubleJumping:
+				_animPlayer.play("jump")
+			elif isRunning:
+				_animPlayer.play("walk")
+			elif isAirborn:
+				_animPlayer.play("jump")
+			elif isFalling:
+				_animPlayer.play("fall")
+			elif isIdling:
+				_animPlayer.play("idle")
 		
-	if isJumping or isDoubleJumping:
-		_animPlayer.play("jump")
-	elif isRunning:
-		_animPlayer.play("walk")
-	elif isAirborn:
-		_animPlayer.play("jump")
-	elif isFalling:
-		_animPlayer.play("fall")
-	elif isIdling:
-		_animPlayer.play("idle")
-		
+
+
+func _on_AttackTimer_timeout():
+	_attackAnimOver = true
