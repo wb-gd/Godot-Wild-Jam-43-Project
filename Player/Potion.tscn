@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player/ption.png" type="Texture" id=1]
+[ext_resource path="res://Player/Rotate.gd" type="Script" id=2]
+[ext_resource path="res://Player/Potion.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35, 38 )
+
+[node name="Potion" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 3 )
+speed = 150000.0
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.118605, 0.118605 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+speed = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )

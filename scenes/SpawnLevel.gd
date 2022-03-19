@@ -15,7 +15,7 @@ var _lrClosed = preload("res://walls/LR_Closed.tscn")
 var rooms = []
 
 func loadRooms():
-	var path = "res://path/to/folder"
+	var path = "res://Rooms"
 	var dir = Directory.new()
 	dir.open(path)
 	dir.list_dir_begin()

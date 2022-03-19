@@ -13,10 +13,14 @@ var _velocity := Vector2.ZERO
 var _direction := 1.0
 var _attackAnimOver := true
 
+var _potion = preload("res://Player/Potion.tscn")
+
 onready var _pivot: Node2D = $PlayerSkin
 onready var _animPlayer: AnimationPlayer = $PlayerSkin/polygons2/AnimationPlayer
 onready var _startScale: Vector2 = _pivot.scale
 onready var _attackTimer: Timer = $AttackTimer
+onready var _spawnPos: Node2D = $PlayerSkin/SpawnPotion
+onready var _mainScene: Node2D = get_node("/root/Main")
 
 func _physics_process(delta) -> void:
 	var _xDir := (
@@ -36,6 +40,11 @@ func _physics_process(delta) -> void:
 	var isRunning := is_on_floor() and not is_zero_approx(_velocity.x)
 	var isTakingDamage := false
 	var isAttacking := Input.is_action_just_pressed("attack") and _attackAnimOver
+	
+	if isAttacking:
+		var potionInstance = _potion.instance()
+		potionInstance.position = _spawnPos.get_global_position()
+		_mainScene.add_child(potionInstance)
 
 	if isJumping:
 		_jumpsMade += 1

@@ -11,10 +11,10 @@ extents = Vector2( 113.25, 405.375 )
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 2 )
-speed = 400.0
-jumpStrength = 1200.0
-extraJumpStrength = 1000.0
-gravity = 2500.0
+speed = 1800.0
+jumpStrength = 5000.0
+extraJumpStrength = 4500.0
+gravity = 10000.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 process_mode = 0
